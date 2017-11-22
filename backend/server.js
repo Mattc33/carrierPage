@@ -26,7 +26,7 @@ var conn = mysql.createConnection({
     port: '8889',
     user: 'root',
     password: 'root',
-    database: 'employee_info'
+    database: 'carrier_info'
 });
 
 //Begin Listening
@@ -39,7 +39,7 @@ QUERIES & ROUTING
 */
 
 // const
-const tableName = 'employee';
+const tableName = 'carriers';
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -74,9 +74,15 @@ app.get('/', function (req, res) {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Insert Row into Table
-insertRow = function(name, phone_number, taxable) {
+insertRow = function(name, address, phone_number, taxable, tier_number, two_digit_unique_code) {
 
-    conn.query("INSERT INTO " + tableName + " (name, phone_number, taxable) VALUES ('" + name + "', '" + phone_number + "', '" + taxable + "');" , (err,rows) => {
+    conn.query("INSERT INTO " + tableName + " (name, address, phone_number, taxable, tier_number, two_digit_unique_code) VALUES ('" 
+    + name + "', '" 
+    + address + "', '" 
+    + phone_number + "', '" 
+    + taxable + "', '" 
+    + ter_number + "', '" 
+    + two_digit_unique_code +   "');" , (err,rows) => {
         if (err) {
             throw err
         } else {
@@ -88,14 +94,15 @@ insertRow = function(name, phone_number, taxable) {
 // POST Routing
 app.post('/', function(req , res){
     var name = req.body.name;
+    var address = req.body.address;
     var phone_number = req.body.phone_number;
     var taxable = req.body.taxable;
+    var tier_number = req.body.tier_number;
+    var two_digit_unique_code = req.body.two_digit_unique_code;
 
-    console.log(name);
-    console.log(phone_number);
-    console.log(taxable);
+    console.log(name + address + phone_number + taxable + tier_number + two_digit_unique_code);
 
-    insertRow(name, phone_number, taxable);
+    insertRow(name, address, phone_number, taxable, tier_number, two_digit_unique_code);
 
     res.send(getTableData);
 });
